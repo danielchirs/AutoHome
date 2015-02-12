@@ -1,8 +1,10 @@
 package com.reggie.au.autohome;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +27,16 @@ public class RoomsListActivity extends ActionBarActivity {
         GridView roomsGV = (GridView) findViewById(R.id.rooms_gv);
         roomsGV.setAdapter(new RoomlistAdapter(this));
 
+        Log.d("autohome", "----------------------setOnItemClickListener----------------------");
+
         roomsGV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Button btn = (Button) view.findViewById(R.id.room_name_btn);
-                
+                Intent intent = new Intent();
+                intent.putExtra("room_name", String.valueOf(parent.getItemAtPosition(position)));
+                Log.d("autohome", "\"----------------------\"+roomNames[position]");
+                intent.setClass(RoomsListActivity.this, DetailedControlsActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -40,7 +47,7 @@ public class RoomsListActivity extends ActionBarActivity {
         private LayoutInflater inflater;
 
         private class GridTemp {
-            Button room_name;
+            TextView room_name;
         }
 
         public RoomlistAdapter(Context c) {
@@ -69,7 +76,7 @@ public class RoomsListActivity extends ActionBarActivity {
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.rooms_item_layout, null);
                 temp = new GridTemp();
-                temp.room_name = (Button) convertView.findViewById(R.id.room_name_tv);
+                temp.room_name = (TextView) convertView.findViewById(R.id.room_name_tv);
                 convertView.setTag(temp);
             } else {
                 temp = (GridTemp) convertView.getTag();

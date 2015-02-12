@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:gravity="center">
 
-    <Button
-        android:id="@+id/room_name_btn"
+    <TextView
+        android:id="@+id/room_name_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/flat_selector"
