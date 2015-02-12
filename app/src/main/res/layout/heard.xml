@@ -11,9 +11,12 @@
         android:gravity="center_vertical|left">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:layout_margin="5dp"
             android:text="● ● ●"
+            android:background="@drawable/btn_selector"
             android:id="@+id/btn_l" />
     </LinearLayout>
 
@@ -25,9 +28,12 @@
         android:gravity="center_vertical|right">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:layout_margin="5dp"
             android:text="● ● ●"
+            android:background="@drawable/btn_selector"
             android:id="@+id/btn_r" />
     </LinearLayout>
 </LinearLayout>

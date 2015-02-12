@@ -29,11 +29,22 @@ tools:context="com.reggie.au.autohome.WelcomActivity"
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="网络类型"
+        android:textSize="30dp"
+        android:id="@+id/txt_net"
+        android:layout_below="@+id/txt_name"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IP"
         android:id="@+id/txt_ip"
         android:textSize="30dp"
-        android:layout_below="@+id/txt_name"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="47dp" />
+        android:layout_below="@+id/txt_net"
+        android:layout_centerHorizontal="true" />
+
+
+
 
 </RelativeLayout>
