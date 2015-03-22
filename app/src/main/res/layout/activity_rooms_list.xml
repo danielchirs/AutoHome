@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#ff771680"
+    android:background="#ffffff"
     android:orientation="vertical"
     tools:context="com.reggie.au.autohome.RoomsListActivity">
 
@@ -10,10 +10,10 @@
         android:id="@+id/rooms_gv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="30dp"
+        android:layout_margin="1dp"
         android:gravity="center"
-        android:horizontalSpacing="10dp"
+        android:horizontalSpacing="1dp"
         android:numColumns="auto_fit"
-        android:verticalSpacing="10dp" />
+        android:verticalSpacing="1dp" />
 
-</LinearLayout>
+    </LinearLayout>
