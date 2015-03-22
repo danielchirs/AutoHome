@@ -43,8 +43,4 @@ tools:context="com.reggie.au.autohome.WelcomActivity"
         android:textSize="30dp"
         android:layout_below="@+id/txt_net"
         android:layout_centerHorizontal="true" />
-
-
-
-
 </RelativeLayout>
