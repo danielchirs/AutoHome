@@ -12,11 +12,12 @@ public class MyApplication extends com.tandong.sa.sql.app.Application  {
         super.onCreate();
         System.out.println("=====1111111111======>");
         ActiveAndroid.initialize(this);
+        System.out.println("=====22222222======>");
     }
     @Override
     public void onTerminate() {
         super.onTerminate();
-        //ActiveAndroid.dispose();//清理
+//        ActiveAndroid.dispose();//清理
     }
 
 }

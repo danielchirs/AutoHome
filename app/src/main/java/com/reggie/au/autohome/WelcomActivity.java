@@ -7,8 +7,11 @@ import android.widget.TextView;
 import com.reggie.au.autohome.model.SmtechHouse;
 import com.tandong.sa.activity.SmartActivity;
 import com.tandong.sa.sql.ActiveAndroid;
+import com.tandong.sa.sql.query.Select;
 import com.tandong.sa.system.SystemInfo;
 import com.tandong.sa.tools.AssistTool;
+
+import java.util.List;
 
 
 public class WelcomActivity extends SmartActivity {
@@ -30,18 +33,23 @@ public class WelcomActivity extends SmartActivity {
         txtnet=(TextView)this.findViewById(R.id.txt_net);
         txtip.setText(wifiIp);
         txtnet.setText(NetWorkType);
+//        ActiveAndroid.beginTransaction();
+//        try {
+//            for (int i = 0; i < 50; i++) {
+//                SmtechHouse house=new SmtechHouse("测试房屋"+i,"测试使用地址"+i,"a0u3001"+i);
+//                house.save();
+//                house=null;
+//            }
+//            ActiveAndroid.setTransactionSuccessful();
+//        }catch (Exception e){
+//
+//        }finally {
+//            ActiveAndroid.endTransaction();
+//        }
+        System.out.println("=====33333333======>");
+        List<SmtechHouse> list=new Select().from(SmtechHouse.class).execute();
+        System.out.println("=====55555555======>"+list.size());
 
-        SharedPreferences setting = getSharedPreferences("smtech.ini", 0);
-        Boolean user_first = setting.getBoolean("FIRST",true);
-        if(user_first){//第一次
-            SmtechHouse house=new SmtechHouse();
-            house.name="测试房屋1";
-            house.code="a0u3001";
-            house.address="测试使用地址1";
-            house.save();
-        }else{
-            System.out.println("=====22222222======>");
-        }
         CountJump(3000, AuActivityHouse.class, true);
     }
 
