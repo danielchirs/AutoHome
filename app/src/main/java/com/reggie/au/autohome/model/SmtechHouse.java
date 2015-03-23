@@ -10,11 +10,11 @@ import com.tandong.sa.sql.annotation.Table;
  */
 @Table(name="SmtechHouse")
 public class SmtechHouse extends Model {
-    @Column(name = "Name")
+    @Column(name = "name")
     public String name;
-    @Column(name = "Address")
+    @Column(name = "address")
     public String address;
-    @Column(name = "Code")
+    @Column(name = "code")
     public String code;
 
     public SmtechHouse(){

@@ -35,6 +35,7 @@ public class WelcomActivity extends SmartActivity {
         Boolean user_first = setting.getBoolean("FIRST",true);
         if(user_first){//第一次
             SmtechHouse house=new SmtechHouse();
+            house.name="测试房屋1";
             house.code="a0u3001";
             house.address="测试使用地址1";
             house.save();

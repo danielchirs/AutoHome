@@ -10,6 +10,7 @@ public class MyApplication extends com.tandong.sa.sql.app.Application  {
     @Override
     public void onCreate() {
         super.onCreate();
+        System.out.println("=====1111111111======>");
         ActiveAndroid.initialize(this);
     }
     @Override
