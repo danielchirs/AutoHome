@@ -22,7 +22,6 @@ public class SmtechDevice {
     public String spic;//对应图标
     @Column(name = "sitem")
     public String sitem;//对应布局
-
     public SmtechDevice(){
 
     }
