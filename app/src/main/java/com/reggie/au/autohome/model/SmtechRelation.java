@@ -5,7 +5,13 @@ package com.reggie.au.autohome.model;
  * 设备关系表
  */
 public class SmtechRelation {
+
+    public String scode;//关系编码(对应每个唯一的关系索引)
+    public String name;//关系名称
+    public int ssid;//关联空间主键
+    public int sdid;//关联设备主键
     public String
+
 
 
 }
