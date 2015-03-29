@@ -30,7 +30,7 @@ tools:context="com.reggie.au.autohome.WelcomActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="网络类型"
-        android:textSize="30dp"
+        android:textSize="26dp"
         android:id="@+id/txt_net"
         android:layout_below="@+id/txt_name"
         android:layout_centerHorizontal="true" />
@@ -40,7 +40,7 @@ tools:context="com.reggie.au.autohome.WelcomActivity"
         android:layout_height="wrap_content"
         android:text="IP"
         android:id="@+id/txt_ip"
-        android:textSize="30dp"
+        android:textSize="26dp"
         android:layout_below="@+id/txt_net"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

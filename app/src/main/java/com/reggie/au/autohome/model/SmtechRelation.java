@@ -10,8 +10,9 @@ public class SmtechRelation {
     public String name;//关系名称
     public int ssid;//关联空间主键
     public int sdid;//关联设备主键
-    public String
-
-
+    public int squence;//序号
+    public String funcode;//功能码
+    public String btnaddr;//按钮地址
+    public String btnfuncode;//按钮功能
 
 }
