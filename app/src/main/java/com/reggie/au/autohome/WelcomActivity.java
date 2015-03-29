@@ -56,7 +56,12 @@ public class WelcomActivity extends SmartActivity {
                 try {
                     DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_data.xml", 0);
 
-                    System.out.println("=======2222222222=======>"+ SmtechData.houseList.size());
+                    System.out.println("=======1111111111=======>"+ SmtechData.houseList.size());
+                    for (int i=0;i<SmtechData.houseList.size();i++)
+                    {
+
+                    }
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
