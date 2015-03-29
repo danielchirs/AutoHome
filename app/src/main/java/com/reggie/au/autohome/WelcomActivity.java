@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.reggie.au.autohome.command.Configuration;
 import com.reggie.au.autohome.model.SmtechHouse;
+import com.reggie.au.autohome.utils.DomXml;
 import com.tandong.sa.activity.SmartActivity;
 import com.tandong.sa.appInfo.AppInfo;
 import com.tandong.sa.sql.ActiveAndroid;
@@ -47,10 +48,19 @@ public class WelcomActivity extends SmartActivity {
         boolean house_mode_fg = assistTool.FileExists(Environment.getExternalStorageDirectory()+"/smtechcache/house_mode.xml");
         if(!house_data_fg){
             txtnet.setText("配置家居数据文件不存在,请导入数据");
-        }else if (!house_mode_fg){
-            txtnet.setText("配置家居情景文件不存在,请导入数据");
-        }else{
-            CountJump(10000, AuActivityHouse.class, true);
+        }else {
+            if (!house_mode_fg) {
+                txtnet.setText("配置家居情景文件不存在,请导入数据");
+            } else {
+                try {
+                    DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_data.xml", 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+                CountJump(10000, AuActivityHouse.class, true);
+            }
         }
     }
 
