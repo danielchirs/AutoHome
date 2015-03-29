@@ -9,6 +9,8 @@ import com.reggie.au.autohome.command.Configuration;
 import com.reggie.au.autohome.command.SmtechData;
 import com.reggie.au.autohome.model.SmtechHouse;
 import com.reggie.au.autohome.utils.DomXml;
+import com.reggie.au.autohome.view.SmtechDeviceView;
+import com.reggie.au.autohome.view.SmtechHouseView;
 import com.tandong.sa.activity.SmartActivity;
 import com.tandong.sa.appInfo.AppInfo;
 import com.tandong.sa.sql.ActiveAndroid;
@@ -17,6 +19,7 @@ import com.tandong.sa.system.SystemInfo;
 import com.tandong.sa.tools.AssistTool;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class WelcomActivity extends SmartActivity {
@@ -56,12 +59,18 @@ public class WelcomActivity extends SmartActivity {
                 try {
                     DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_data.xml", 0);
 
-                    System.out.println("=======1111111111=======>"+ SmtechData.houseList.size());
-                    for (int i=0;i<SmtechData.houseList.size();i++)
+                    System.out.println("=======1111111111=======>"+ SmtechData.houseMap.size());
+                    for (Map.Entry<String,SmtechHouseView> entry:SmtechData.houseMap.entrySet())
                     {
-
+                        SmtechHouseView smtechHouseView=entry.getValue();
+                        System.out.println("=======22222222222=======>"+smtechHouseView.rid+"<====>"+smtechHouseView.name);
+                        for (int j=0;j<smtechHouseView.deviceList.size();j++)
+                        {
+                            SmtechDeviceView SmtechDeviceView=smtechHouseView.deviceList.get(j);
+                            System.out.println("=======33333=======>"+SmtechDeviceView.name+"<====>"+SmtechDeviceView.type+"<====>"+SmtechDeviceView.machinecode);
+                        }
+                        System.out.println("#################################");
                     }
-
 
                 } catch (Exception e) {
                     e.printStackTrace();

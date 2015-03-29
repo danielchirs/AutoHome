@@ -66,7 +66,7 @@ public class DomXml {
                         }
                         if (xmlParser.getName().equalsIgnoreCase("room"))
                         {
-                            SmtechData.houseList.add(smtechHouseView);
+                            SmtechData.houseMap.put(smtechHouseView.rid+"",smtechHouseView);
                             smtechHouseView=null;
                         }
                         break;
