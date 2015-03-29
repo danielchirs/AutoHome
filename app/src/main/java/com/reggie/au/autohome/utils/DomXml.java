@@ -25,7 +25,6 @@ public class DomXml {
     //读取XML配置文件全路径
     public static void Personxml(String path,int type)throws Exception {
         if(type==0){//读取数据配置
-//            SmtechData.houseList;
             String readString=getxml(path);
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(true);
@@ -38,7 +37,6 @@ public class DomXml {
                 switch(evtType){
                     case XmlPullParser.START_TAG:
                         String name=xmlParser.getName();
-//                        System.out.println("===11111111111===>"+name);
                         if("room".equals(name)){
                             smtechHouseView=new SmtechHouseView();
                             smtechHouseView.rid=Integer.parseInt(xmlParser.getAttributeValue(0));
@@ -47,11 +45,30 @@ public class DomXml {
                         if("device".equals(name)){
                             smtechDeviceView=new SmtechDeviceView();
                         }
-
+                        if("name".equals(name)){
+                            smtechDeviceView.name=xmlParser.nextText();
+                        }
+                        if("type".equals(name)){
+                            smtechDeviceView.type=Integer.parseInt(xmlParser.nextText());
+                        }
+                        if("machinecode".equals(name)){
+                            smtechDeviceView.machinecode=xmlParser.nextText();
+                        }
+                        if("layout".equals(name)){
+                            smtechDeviceView.layoutid=Integer.parseInt(xmlParser.nextText());
+                        }
                         break;
                     case XmlPullParser.END_TAG://结束元素事件
-
-
+                        if (xmlParser.getName().equalsIgnoreCase("device"))
+                        {
+                            smtechHouseView.deviceList.add(smtechDeviceView);
+                            smtechDeviceView=null;
+                        }
+                        if (xmlParser.getName().equalsIgnoreCase("room"))
+                        {
+                            SmtechData.houseList.add(smtechHouseView);
+                            smtechHouseView=null;
+                        }
                         break;
                     default:
                         break;

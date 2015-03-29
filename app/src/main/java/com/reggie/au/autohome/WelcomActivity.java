@@ -6,6 +6,7 @@ import android.os.Environment;
 import android.widget.TextView;
 
 import com.reggie.au.autohome.command.Configuration;
+import com.reggie.au.autohome.command.SmtechData;
 import com.reggie.au.autohome.model.SmtechHouse;
 import com.reggie.au.autohome.utils.DomXml;
 import com.tandong.sa.activity.SmartActivity;
@@ -54,6 +55,9 @@ public class WelcomActivity extends SmartActivity {
             } else {
                 try {
                     DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_data.xml", 0);
+
+                    System.out.println("=======2222222222=======>"+ SmtechData.houseList.size());
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
