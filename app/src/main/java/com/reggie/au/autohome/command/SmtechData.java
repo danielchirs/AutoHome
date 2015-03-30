@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class SmtechData {
     public static Map<String,SmtechHouseView> houseMap=new HashMap<String,SmtechHouseView>();//家居配置数据列表
-    public static List<SmtechSceneModeView> sceneList=new ArrayList<SmtechSceneModeView>();//情景数据列表
+    public static Map<String,SmtechSceneModeView> sceneMap=new HashMap<String,SmtechSceneModeView>();//情景数据列表
     public SmtechData() {
         super();
     }

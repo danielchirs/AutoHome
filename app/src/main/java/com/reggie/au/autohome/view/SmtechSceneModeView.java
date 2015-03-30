@@ -7,6 +7,7 @@ import android.provider.ContactsContract;
  * 情景模式配置
  */
 public class SmtechSceneModeView {
+    public int id;
     public String name;
     public String icon;
     public String command;

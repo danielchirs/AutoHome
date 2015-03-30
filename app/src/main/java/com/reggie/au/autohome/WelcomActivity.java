@@ -57,8 +57,8 @@ public class WelcomActivity extends SmartActivity {
                 txtnet.setText("配置家居情景文件不存在,请导入数据");
             } else {
                 try {
-                    DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_data.xml", 0);
-
+                    DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_mode.xml", 0);
+                    DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_data.xml", 1);
                     System.out.println("=======1111111111=======>"+ SmtechData.houseMap.size());
                     for (Map.Entry<String,SmtechHouseView> entry:SmtechData.houseMap.entrySet())
                     {
