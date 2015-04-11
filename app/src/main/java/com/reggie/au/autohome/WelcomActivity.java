@@ -48,37 +48,30 @@ public class WelcomActivity extends SmartActivity {
         assistTool.savePreferenceLong(Configuration.app_lasttime, appInfo.getLastUpdateTime(this));//记录每次最后登录时间
         long sequece=assistTool.getPreferenceLong(Configuration.app_sequence);
         assistTool.savePreferenceLong(Configuration.app_sequence,sequece++);//使用次数
+        boolean house_info_fg = assistTool.FileExists(Environment.getExternalStorageDirectory()+"/smtechcache/house_info.xml");
         boolean house_data_fg = assistTool.FileExists(Environment.getExternalStorageDirectory()+"/smtechcache/house_data.xml");
         boolean house_mode_fg = assistTool.FileExists(Environment.getExternalStorageDirectory()+"/smtechcache/house_mode.xml");
-        if(!house_data_fg){
-            txtnet.setText("配置家居数据文件不存在,请导入数据");
+        if (!house_info_fg){
+            txtnet.setText("配置房屋基本信息数据文件不存在,请导入数据");
         }else {
-            if (!house_mode_fg) {
-                txtnet.setText("配置家居情景文件不存在,请导入数据");
-            } else {
-                try {
-                    DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_info.xml", 0);//房子的基本信息
-                    DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_data.xml", 1);//房间控制配置
-                    DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_mode.xml", 2);//情景模式控制
-                    System.out.println("=======1111111111=======>"+ SmtechData.houseMap.size());
-                    for (Map.Entry<String,SmtechHouseView> entry:SmtechData.houseMap.entrySet())
-                    {
-                        SmtechHouseView smtechHouseView=entry.getValue();
-                        System.out.println("=======22222222222=======>"+smtechHouseView.rid+"<====>"+smtechHouseView.name);
-                        for (int j=0;j<smtechHouseView.deviceList.size();j++)
-                        {
-                            SmtechDeviceView SmtechDeviceView=smtechHouseView.deviceList.get(j);
-                            System.out.println("=======33333=======>"+SmtechDeviceView.name+"<====>"+SmtechDeviceView.type+"<====>"+SmtechDeviceView.machinecode);
-                        }
-                        System.out.println("#################################");
+            if(!house_data_fg){
+                txtnet.setText("配置家居数据文件不存在,请导入数据");
+            }else {
+                if (!house_mode_fg) {
+                    txtnet.setText("配置家居情景文件不存在,请导入数据");
+                } else {
+                    try {
+                        DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_info.xml", 0);//房子的基本信息
+                        DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_data.xml", 1);//房间控制配置
+                        DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_mode.xml", 2);//情景模式控制
+                        System.out.println("=======房间数量=======>"+ SmtechData.houseList.size());
+                        System.out.println("=======情景数据=======>"+ SmtechData.modMap.size());
+                        System.out.println("=======1111111=======>"+ SmtechData.dataMap.size());
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    CountJump(10000, AuActivityHouse.class, true);
                 }
-
-
-                CountJump(10000, AuActivityHouse.class, true);
             }
         }
     }
