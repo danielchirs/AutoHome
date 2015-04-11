@@ -8,7 +8,27 @@ import java.util.List;
  * 家居模式配置
  */
 public class SmtechHouseView {
-    public int rid;
-    public String name;
-    public List<SmtechDeviceView> deviceList = new ArrayList<SmtechDeviceView>();//设备集合
+    private int rid;
+    private String name;
+
+    public SmtechHouseView() {
+        super();
+    }
+
+
+    public int getRid() {
+        return rid;
+    }
+
+    public void setRid(int rid) {
+        this.rid = rid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

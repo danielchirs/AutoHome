@@ -1,5 +1,6 @@
 package com.reggie.au.autohome.utils;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 
 /**
@@ -8,5 +9,13 @@ import java.net.ServerSocket;
 public class SmtechSocket {
 
     ServerSocket sever;
+
+    public SmtechSocket(){
+        try{
+            sever = new ServerSocket(123);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
 
 }
