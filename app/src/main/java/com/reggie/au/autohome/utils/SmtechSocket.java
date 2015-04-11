@@ -12,7 +12,7 @@ public class SmtechSocket {
 
     public SmtechSocket(){
         try{
-            sever = new ServerSocket(port);
+            sever = new ServerSocket(123);
         }catch(IOException e){
             e.printStackTrace();
         }

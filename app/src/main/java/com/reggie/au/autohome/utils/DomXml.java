@@ -15,6 +15,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by daniel on 2015/3/26.
@@ -112,45 +114,64 @@ public class DomXml {
             XmlPullParser xmlParser = factory.newPullParser();
             xmlParser.setInput(new StringReader(readString));
             int evtType= xmlParser.getEventType();
-            SmtechHouseView smtechHouseView=null;
-            SmtechDeviceView smtechDeviceView=null;
+            SmtechHouseView smtechHouseView=null;//房子
+            SmtechDeviceView smtechDeviceView=null;//设备
+            List<SmtechDeviceView> dataList=null;
             while(evtType!=XmlPullParser.END_DOCUMENT){
                 switch(evtType){
                     case XmlPullParser.START_TAG:
                         String name=xmlParser.getName();
                         if("room".equals(name)){
                             smtechHouseView=new SmtechHouseView();
-                            smtechHouseView.rid=Integer.parseInt(xmlParser.getAttributeValue(0));
-                            smtechHouseView.name=xmlParser.getAttributeValue(1);
+                            dataList=new ArrayList<SmtechDeviceView>();
                         }
+                        if("id".equals(name)){
+                            smtechHouseView.setRid(Integer.parseInt(xmlParser.nextText()));
+                        }
+                        if("name".equals(name)){
+                            smtechHouseView.setName(xmlParser.nextText());
+                        }
+
                         if("device".equals(name)){
                             smtechDeviceView=new SmtechDeviceView();
                         }
-                        if("name".equals(name)){
-                            smtechDeviceView.name=xmlParser.nextText();
+                        if("widgetid".equals(name)){
+                            smtechDeviceView.setWidgetId(xmlParser.nextText());
+                }
+                        if("widgetname".equals(name)){
+                            smtechDeviceView.setWidgetname(xmlParser.nextText());
                         }
                         if("icon".equals(name)){
-                            smtechDeviceView.icon=xmlParser.nextText();
+                            smtechDeviceView.setIcon(xmlParser.nextText());
                         }
                         if("type".equals(name)){
-                            smtechDeviceView.type=Integer.parseInt(xmlParser.nextText());
+                            smtechDeviceView.setType(xmlParser.nextText());
                         }
                         if("machinecode".equals(name)){
-                            smtechDeviceView.machinecode=xmlParser.nextText();
+                            smtechDeviceView.setMachinecode(xmlParser.nextText());
                         }
-                        if("layout".equals(name)){
-                            smtechDeviceView.layoutid=Integer.parseInt(xmlParser.nextText());
+                        if("function".equals(name)){
+                            smtechDeviceView.setFunction(xmlParser.nextText());
+                        }
+
+                        if("address".equals(name)){
+                            smtechDeviceView.setAddress(xmlParser.nextText());
+                        }
+                        if("item".equals(name)){
+                            smtechDeviceView.getItem().put(xmlParser.getAttributeValue(0),xmlParser.nextText());
                         }
                         break;
                     case XmlPullParser.END_TAG://结束元素事件
                         if (xmlParser.getName().equalsIgnoreCase("device"))
                         {
-                            smtechHouseView.deviceList.add(smtechDeviceView);
+                            dataList.add(smtechDeviceView);
                             smtechDeviceView=null;
                         }
                         if (xmlParser.getName().equalsIgnoreCase("room"))
                         {
-                            SmtechData.houseMap.put(smtechHouseView.rid+"",smtechHouseView);
+                            SmtechData.houseList.add(smtechHouseView);
+                            SmtechData.dataMap.put(smtechHouseView.getRid()+"",dataList);
+                            dataList=null;
                             smtechHouseView=null;
                         }
                         break;
@@ -207,7 +228,7 @@ public class DomXml {
                 case XmlPullParser.END_TAG://结束元素事件
                     if (xmlParser.getName().equalsIgnoreCase("mode"))
                     {
-                        SmtechData.sceneMap.put(smtechSceneModeView.getId()+"",smtechSceneModeView);
+                        SmtechData.modMap.put(smtechSceneModeView.getId()+"",smtechSceneModeView);
                         smtechSceneModeView=null;
                     }
                     break;
