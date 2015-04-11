@@ -4,4 +4,6 @@
 
     <color name="blue_normal">@android:color/holo_blue_light</color>
 
+    <color name="floralwhite">#FFFAF0</color>
+
 </resources>
