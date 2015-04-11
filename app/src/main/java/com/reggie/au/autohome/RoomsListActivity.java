@@ -1,9 +1,9 @@
 package com.reggie.au.autohome;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -19,7 +19,7 @@ import com.etsy.android.grid.StaggeredGridView;
 import java.util.Random;
 
 
-public class RoomsListActivity extends ActionBarActivity {
+public class RoomsListActivity extends Activity {
 
     private static final String[] ROOM_DATA = new String[]{
             "主卧", "厨房", "书房", "客卧", "儿童房",
