@@ -55,13 +55,13 @@ public class WelcomActivity extends SmartActivity {
                         DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_info.xml", 0);//房子的基本信息
                         DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_data.xml", 1);//房间控制配置
                         DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_mode.xml", 2);//情景模式控制
-                        System.out.println("=======房间数量=======>" + SmtechData.houseList.size());
-                        System.out.println("=======情景数据=======>" + SmtechData.modMap.size());
-                        System.out.println("=======1111111=======>" + SmtechData.dataMap.size());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    CountJump(10000, AuActivityHouse.class, true);
+                    System.out.println("=======房间数量=======>" + SmtechData.houseList.size());
+                    System.out.println("=======情景数据=======>" + SmtechData.modMap.size());
+                    System.out.println("=======1111111=======>" + SmtechData.dataMap.size());
+                    CountJump(5000, AuActivityHouse.class, true);
                 }
             }
         }

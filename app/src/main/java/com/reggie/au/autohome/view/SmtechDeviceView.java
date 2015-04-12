@@ -118,4 +118,15 @@ public class SmtechDeviceView {
     public void setItem(Map<String, String> item) {
         this.item = item;
     }
+
+
+    /**
+     * 获取字符串
+     * @param itemCode
+     * @return
+     */
+    public String getCode(String itemCode){
+        String strCode=this.getMachinecode()+this.getFunction()+this.getAddress()+this.getItem().get(itemCode)+"01";
+        return strCode;
+    }
 }

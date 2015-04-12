@@ -93,7 +93,7 @@ public class SmtechSceneModeView {
      * @param itemCode
      * @return
      */
-    public String getModeCode(String itemCode){
+    public String getCode(String itemCode){
         String strCode=this.getMachinecode()+this.getFunction()+this.getAddress()+this.getItem().get(itemCode)+"01";
         return strCode;
     }
