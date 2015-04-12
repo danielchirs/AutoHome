@@ -1,9 +1,10 @@
 <resources>
-
     <color name="blue_pressed">@android:color/holo_blue_dark</color>
-
     <color name="blue_normal">@android:color/holo_blue_light</color>
-
     <color name="floralwhite">#FFFAF0</color>
-
+    <color name="aliceblue">#F0F8FF</color>
+    <color name="burlywood">#DEB887</color>
+    <color name="lightskyblue">#87CEFA</color>
+    <color name="transparent_background">#50000000</color>
+    <color name="beige_font">#F5F5DC</color>
 </resources>

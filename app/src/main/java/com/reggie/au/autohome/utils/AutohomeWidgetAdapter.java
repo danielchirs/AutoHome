@@ -5,36 +5,31 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.reggie.au.autohome.R;
 import com.reggie.au.autohome.model.AutohomeItem;
-import com.reggie.au.autohome.model.AutohomeWidget;
-import com.reggie.au.autohome.model.AutohomeWidgetMapping;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import com.reggie.au.autohome.utils.SlideSwitchView.OnSwitchChangedListener;
+import com.reggie.au.autohome.view.SmtechDeviceView;
+
+import java.util.List;
 
 /**
  * Created by michaelchen on 2015/3/30.
  */
-public class AutohomeWidgetAdapter extends ArrayAdapter<AutohomeWidget> {
+public class AutohomeWidgetAdapter extends ArrayAdapter<SmtechDeviceView> {
     public static final int TYPE_GENERICITEM = 0;
     public static final int TYPE_FRAME = 1;
     public static final int TYPE_GROUP = 2;
@@ -51,8 +46,8 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<AutohomeWidget> {
     public static final int TYPE_WEB = 13;
     public static final int TYPES_COUNT = 14;
 
-    public AutohomeWidgetAdapter(Context context, int resource, AutohomeWidget[] objects) {
-        super(context, resource, objects);
+    public AutohomeWidgetAdapter(Context context, int resource, List deviceList) {
+        super(context, resource, deviceList);
     }
 
     @Override
@@ -62,7 +57,7 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<AutohomeWidget> {
         TextView valueTextView;
         int widgetLayout = 0;
         String[] splitString = {};
-        AutohomeWidget autohomeWidget = getItem(position);
+        SmtechDeviceView deviceView = getItem(position);
         /*根据读取xml来判断加载布局文件*/
         switch (this.getItemViewType(position)) {
             case TYPE_SWITCH:
@@ -76,9 +71,6 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<AutohomeWidget> {
                 break;
             case TYPE_SLIDER:
                 widgetLayout = R.layout.autohomewidgetlist_slideritem;
-                break;
-            case TYPE_SELECTION:
-                widgetLayout = R.layout.autohomewidgetlist_selectionitem;
                 break;
             case TYPE_SETPOINT:
                 widgetLayout = R.layout.autohomewidgetlist_setpointitem;
@@ -102,17 +94,17 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<AutohomeWidget> {
                 labelTextView = (TextView) widgetView
                         .findViewById(R.id.switchlabel);
                 if (labelTextView != null)
-                    labelTextView.setText(autohomeWidget.getLabel());
+                    labelTextView.setText(deviceView.getWidgetname());
                 SlideSwitchView switchSwitch = (SlideSwitchView) widgetView
                         .findViewById(R.id.switchswitch);
-                if (autohomeWidget.hasItem()) {
-                    if (autohomeWidget.getItem().getState().equals("ON")) {
+                if (deviceView.getState() != null) {
+                    if (deviceView.getState().equals("on")) {
                         switchSwitch.setChecked(true);
                     } else {
                         switchSwitch.setChecked(false);
                     }
                 }
-                switchSwitch.setTag(autohomeWidget.getItem());
+                switchSwitch.setTag(deviceView.getCode(""));
                 switchSwitch.setOnChangeListener(new OnSwitchChangedListener() {
                     @Override
                     public void onSwitchChange(SlideSwitchView switchView, boolean isChecked) {
@@ -123,24 +115,24 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<AutohomeWidget> {
                         }
                     }
                 });
-                AutohomeSmartImageView switchImage = (AutohomeSmartImageView) widgetView
+                ImageView switchImage = (ImageView) widgetView
                         .findViewById(R.id.switchimage);
-                switchImage.setImageUrl(".png");
+                switchImage.setImageResource(R.drawable.ic_launcher);
                 break;
             case TYPE_ROLLERSHUTTER:
                 labelTextView = (TextView) widgetView
                         .findViewById(R.id.rollershutterlabel);
                 if (labelTextView != null)
-                    labelTextView.setText(autohomeWidget.getLabel());
+                    labelTextView.setText(deviceView.getWidgetname());
                 ImageButton rollershutterUpButton = (ImageButton) widgetView
                         .findViewById(R.id.rollershutterbutton_up);
                 ImageButton rollershutterStopButton = (ImageButton) widgetView
                         .findViewById(R.id.rollershutterbutton_stop);
                 ImageButton rollershutterDownButton = (ImageButton) widgetView
                         .findViewById(R.id.rollershutterbutton_down);
-                rollershutterUpButton.setTag(autohomeWidget.getItem());
-                rollershutterStopButton.setTag(autohomeWidget.getItem());
-                rollershutterDownButton.setTag(autohomeWidget.getItem());
+                rollershutterUpButton.setTag(deviceView.getCode(""));
+                rollershutterStopButton.setTag(deviceView.getCode(""));
+                rollershutterDownButton.setTag(deviceView.getCode(""));
                 rollershutterUpButton.setOnTouchListener(new OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent motionEvent) {
@@ -183,7 +175,7 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<AutohomeWidget> {
                 break;
             case TYPE_TEXT:
                 labelTextView = (TextView) widgetView.findViewById(R.id.textlabel);
-                splitString = autohomeWidget.getLabel().split("\\[|\\]");
+                splitString = deviceView.getWidgetname().split("\\[|\\]");
                 if (labelTextView != null)
                     labelTextView.setText(splitString[0]);
                 valueTextView = (TextView) widgetView.findViewById(R.id.textvalue);
@@ -205,7 +197,7 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<AutohomeWidget> {
             case TYPE_SLIDER:
                 labelTextView = (TextView) widgetView
                         .findViewById(R.id.sliderlabel);
-                splitString = autohomeWidget.getLabel().split("\\[|\\]");
+                splitString = deviceView.getWidgetname().split("\\[|\\]");
                 if (labelTextView != null)
                     labelTextView.setText(splitString[0]);
                 AutohomeSmartImageView itemImage = (AutohomeSmartImageView) widgetView
@@ -213,10 +205,9 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<AutohomeWidget> {
                 itemImage.setImageUrl(".png");
                 SeekBar sliderSeekBar = (SeekBar) widgetView
                         .findViewById(R.id.sliderseekbar);
-                if (autohomeWidget.hasItem()) {
-                    sliderSeekBar.setTag(autohomeWidget.getItem());
-                    int sliderState = (int) Float.parseFloat(autohomeWidget
-                            .getItem().getState());
+                if (deviceView.getState() != null) {
+                    sliderSeekBar.setTag(deviceView.getCode(""));
+                    int sliderState = (int) Float.parseFloat(deviceView.getState());
                     sliderSeekBar.setProgress(sliderState);
                     sliderSeekBar
                             .setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -246,60 +237,10 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<AutohomeWidget> {
                             });
                 }
                 break;
-            case TYPE_SELECTION:
-                labelTextView = (TextView) widgetView
-                        .findViewById(R.id.selectionlabel);
-                if (labelTextView != null)
-                    labelTextView.setText(autohomeWidget.getLabel());
-                Spinner selectionSpinner = (Spinner) widgetView
-                        .findViewById(R.id.selectionspinner);
-                ArrayList<String> spinnerArray = new ArrayList<String>();
-                Iterator<AutohomeWidgetMapping> mappingIterator = autohomeWidget
-                        .getMappings().iterator();
-                while (mappingIterator.hasNext()) {
-                    spinnerArray.add(mappingIterator.next().getLabel());
-                }
-                ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(
-                        this.getContext(), android.R.layout.simple_spinner_item,
-                        spinnerArray);
-                spinnerAdapter
-                        .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                selectionSpinner.setAdapter(spinnerAdapter);
-                selectionSpinner.setTag(autohomeWidget);
-                selectionSpinner.setSelection((int) Float.parseFloat(autohomeWidget
-                        .getItem().getState()));
-                selectionSpinner
-                        .setOnItemSelectedListener(new OnItemSelectedListener() {
-
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent,
-                                                       View view, int index, long id) {
-                                Log.i("AutohomeAdapter",
-                                        "Spinner item click on index " + index);
-                                AutohomeWidget ahWidget = (AutohomeWidget) parent
-                                        .getTag();
-                                if (ahWidget != null)
-                                    Log.i("AutohomeAdapter",
-                                            "Label selected = "
-                                                    + ahWidget.getMapping(
-                                                    index).getLabel());
-                                if (!ahWidget.getItem().getState().equals(ahWidget.getMapping(index).getCommand())) {
-                                    // sendItemCommand(ahWidget.getItem(), ahWidget.getMapping(index).getCommand());
-                                }
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> arg0) {
-                            }
-                        });
-                AutohomeSmartImageView selectionImage = (AutohomeSmartImageView) widgetView
-                        .findViewById(R.id.selectionimage);
-                selectionImage.setImageUrl(".png");
-                break;
             case TYPE_SETPOINT:
                 labelTextView = (TextView) widgetView
                         .findViewById(R.id.setpointlabel);
-                splitString = autohomeWidget.getLabel().split("\\[|\\]");
+                splitString = deviceView.getWidgetname().split("\\[|\\]");
                 if (labelTextView != null)
                     labelTextView.setText(splitString[0]);
                 AutohomeSmartImageView setPointImage = (AutohomeSmartImageView) widgetView
@@ -317,18 +258,18 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<AutohomeWidget> {
                         .findViewById(R.id.setpointbutton_minus);
                 Button setPointPlusButton = (Button) widgetView
                         .findViewById(R.id.setpointbutton_plus);
-                setPointMinusButton.setTag(autohomeWidget);
-                setPointPlusButton.setTag(autohomeWidget);
+                setPointMinusButton.setTag(deviceView.getCode(""));
+                setPointPlusButton.setTag(deviceView.getCode(""));
                 setPointMinusButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Log.i("AutohomeAdapter", "Minus");
-                        AutohomeWidget setPointWidget = (AutohomeWidget) v.getTag();
+                        String setPointWidget = (String) v.getTag();
                         float currentValue = Float.valueOf(
-                                setPointWidget.getItem().getState()).floatValue();
-                        currentValue = currentValue - setPointWidget.getStep();
-                        if (currentValue < setPointWidget.getMinValue()) {
-                            currentValue = setPointWidget.getMinValue();
+                                setPointWidget).floatValue();
+                        currentValue = currentValue - 0.5f;
+                        if (currentValue < 16f) {
+                            currentValue = 16f;
                         }
                         //sendItemCommand(setPointWidget.getItem(),String.valueOf(currentValue));
                     }
@@ -337,12 +278,12 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<AutohomeWidget> {
                     @Override
                     public void onClick(View v) {
                         Log.i("AutohomeAdapter", "Plus");
-                        AutohomeWidget setPointWidget = (AutohomeWidget) v.getTag();
+                        String setPointWidget = (String) v.getTag();
                         float currentValue = Float.valueOf(
-                                setPointWidget.getItem().getState()).floatValue();
-                        currentValue = currentValue + setPointWidget.getStep();
-                        if (currentValue > setPointWidget.getMaxValue()) {
-                            currentValue = setPointWidget.getMaxValue();
+                                setPointWidget).floatValue();
+                        currentValue = currentValue + 0.5f;
+                        if (currentValue > 28f) {
+                            currentValue = 28f;
                         }
                         //sendItemCommand(setPointWidget.getItem(), String.valueOf(currentValue));
                     }
@@ -351,7 +292,7 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<AutohomeWidget> {
             default:
                 labelTextView = (TextView) widgetView.findViewById(R.id.itemlabel);
                 if (labelTextView != null)
-                    labelTextView.setText(autohomeWidget.getLabel());
+                    labelTextView.setText(deviceView.getWidgetname());
                 AutohomeSmartImageView sliderImage = (AutohomeSmartImageView) widgetView
                         .findViewById(R.id.itemimage);
                 sliderImage.setImageUrl(".png");
@@ -379,22 +320,16 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<AutohomeWidget> {
 
     @Override
     public int getItemViewType(int position) {
-        AutohomeWidget autohomeWidget = getItem(position);
-        if (autohomeWidget.getType().equals("Switch")) {
-            if (autohomeWidget.hasMappings()) {
-                return TYPE_SECTIONSWITCH;
-            } else if (autohomeWidget.getItem().getType().equals("RollershutterItem")) {
-                return TYPE_ROLLERSHUTTER;
-            } else {
-                return TYPE_SWITCH;
-            }
-        } else if (autohomeWidget.getType().equals("Text")) {
+        SmtechDeviceView deviceView = getItem(position);
+        if (deviceView.getType().equals("Switch")) {
+            return TYPE_SWITCH;
+        } else if (deviceView.getType().equals("Text")) {
             return TYPE_TEXT;
-        } else if (autohomeWidget.getType().equals("Slider")) {
+        } else if (deviceView.getType().equals("Slider")) {
             return TYPE_SLIDER;
-        } else if (autohomeWidget.getType().equals("Selection")) {
+        } else if (deviceView.getType().equals("Selection")) {
             return TYPE_SELECTION;
-        } else if (autohomeWidget.getType().equals("Setpoint")) {
+        } else if (deviceView.getType().equals("Setpoint")) {
             return TYPE_SETPOINT;
         } else {
             return TYPE_GENERICITEM;

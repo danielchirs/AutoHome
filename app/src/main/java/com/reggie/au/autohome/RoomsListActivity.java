@@ -15,16 +15,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.etsy.android.grid.StaggeredGridView;
+import com.reggie.au.autohome.command.SmtechData;
+import com.reggie.au.autohome.view.SmtechHouseView;
 
+import java.util.List;
 import java.util.Random;
 
 
 public class RoomsListActivity extends Activity {
 
-    private static final String[] ROOM_DATA = new String[]{
-            "主卧", "厨房", "书房", "客卧", "儿童房",
-            "客厅", "餐厅", "阳台", "卫生间1", "卫生间2"
-    };
+    private static final List<SmtechHouseView> houseList = SmtechData.houseList;
 
     private static final int[] COLOR = new int[]{
             0xff33b5e5, 0xffaa66cc, 0xff99cc00, 0xffffbb33, 0xffff4444
@@ -41,13 +41,15 @@ public class RoomsListActivity extends Activity {
         sGridView.setAdapter(new RoomlistAdapter());
 
 
-        Log.d("autohome", "----------------------setOnItemClickListener----------------------");
+        Log.d("autohome", "----------------------setOnItemClickListener----------------------"+houseList.size());
 
         sGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
-                intent.putExtra("room_name", String.valueOf(parent.getItemAtPosition(position)));
+                SmtechHouseView house = (SmtechHouseView) parent.getItemAtPosition(position);
+                intent.putExtra("room_name", String.valueOf(house.getName()));
+                intent.putExtra("roomId", String.valueOf(id));
                 Log.d("autohome", "\"----------------------\"+roomNames[position]");
                 intent.setClass(RoomsListActivity.this, DetailedControlsActivity.class);
                 startActivity(intent);
@@ -59,17 +61,17 @@ public class RoomsListActivity extends Activity {
 
         @Override
         public int getCount() {
-            return ROOM_DATA.length;
+            return houseList.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return ROOM_DATA[position];
+            return houseList.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            return position;
+            return houseList.get(position).getRid();
         }
 
         @Override
@@ -80,7 +82,7 @@ public class RoomsListActivity extends Activity {
                 convertView.setLayoutParams(lp);
             }
             TextView view = (TextView) convertView;
-            view.setText(ROOM_DATA[position]);
+            view.setText(houseList.get(position).getName());
             view.setBackgroundColor(COLOR[position % 5]);
             view.setGravity(Gravity.CENTER);
             view.setTextColor(Color.WHITE);

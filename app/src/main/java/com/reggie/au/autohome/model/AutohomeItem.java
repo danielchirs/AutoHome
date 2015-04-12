@@ -1,7 +1,6 @@
 package com.reggie.au.autohome.model;
 
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import java.util.Map;
 
 /**
  * Created by michaelchen on 2015/3/30.
@@ -15,28 +14,13 @@ public class AutohomeItem {
     /**
      * 获得对应的item节点
      *
-     * @param startNode
+     * @param itemMap
      */
-    public AutohomeItem(Node startNode) {
-        if (startNode.hasChildNodes()) {
-            NodeList childNodes = startNode.getChildNodes();
-            for (int i = 0; i < childNodes.getLength(); i++) {
-                Node childNode = childNodes.item(i);
-                if (childNode.getNodeName().equals("type")) {
-                    this.setType(childNode.getTextContent());
-                } else if (childNode.getNodeName().equals("name")) {
-                    this.setName(childNode.getTextContent());
-                } else if (childNode.getNodeName().equals("state")) {
-                    if (childNode.getTextContent().equals("Uninitialized")) {
-                        this.setState("0");
-                    } else {
-                        this.setState(childNode.getTextContent());
-                    }
-                } else if (childNode.getNodeName().equals("link")) {
-                    this.setLink(childNode.getTextContent());
-                }
-            }
-        }
+    public AutohomeItem(Map<String, String> itemMap) {
+        this.setType(itemMap.get("type"));
+        this.setName(itemMap.get("name"));
+        this.setState(itemMap.get("state"));
+        this.setLink(itemMap.get("command"));
     }
 
     public String getName() {

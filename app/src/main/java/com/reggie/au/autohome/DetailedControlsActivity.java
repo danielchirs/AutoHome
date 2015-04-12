@@ -1,15 +1,25 @@
 package com.reggie.au.autohome;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.LinearLayout;
+import android.util.Log;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.reggie.au.autohome.command.SmtechData;
+import com.reggie.au.autohome.utils.AutohomeWidgetAdapter;
+import com.reggie.au.autohome.view.SmtechDeviceView;
 
-public class DetailedControlsActivity extends ActionBarActivity {
+import java.util.List;
+
+
+public class DetailedControlsActivity extends Activity {
+
+    // Logging TAG
+    private static final String TAG = "WidgetListActivity";
+
+    private AutohomeWidgetAdapter autohomeWidgetAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,19 +29,17 @@ public class DetailedControlsActivity extends ActionBarActivity {
     }
 
     private void setView() {
-        LinearLayout wenduLL = (LinearLayout) findViewById(R.id.wendu_addSub);
-        LinearLayout shiduLL = (LinearLayout) findViewById(R.id.shidu_addSub);
-
         TextView control_name_tv = (TextView) findViewById(R.id.control_name_tv);
         Intent intent = getIntent();
         String roomName = intent.getStringExtra("room_name");
-        control_name_tv.setText("当前房间："+roomName);
-
-        final AddAndSubView addAndSubView1 = new AddAndSubView(DetailedControlsActivity.this, 19);
-        final AddAndSubView addAndSubView2 = new AddAndSubView(DetailedControlsActivity.this, 36);
-
-        wenduLL.addView(addAndSubView1);
-        shiduLL.addView(addAndSubView2);
-
+        String roomId = intent.getStringExtra("roomId");
+        control_name_tv.setText("当前房间：" + roomName);
+        Log.i(TAG, "------------------- roomId -------------" + roomId);
+        List<SmtechDeviceView> deviceList = SmtechData.dataMap.get(roomId);
+        Log.i(TAG, "device count : " + deviceList.size());
+        autohomeWidgetAdapter = new AutohomeWidgetAdapter(this, R.layout.activity_detailed_controls, deviceList);
+        ListView listView = (ListView) findViewById(R.id.device_listview);
+        listView.setAdapter(autohomeWidgetAdapter);
     }
+
 }

@@ -38,7 +38,7 @@ public class WelcomActivity extends SmartActivity {
         txtnet.setText(NetWorkType);
         assistTool.savePreferenceLong(Configuration.app_lasttime, appInfo.getLastUpdateTime(this));//记录每次最后登录时间
         long sequece = assistTool.getPreferenceLong(Configuration.app_sequence);
-        assistTool.savePreferenceLong(Configuration.app_sequence, sequece++);//使用次数
+        assistTool.savePreferenceLong(Configuration.app_sequence, sequece++);//使用次数yg
         boolean house_info_fg = assistTool.FileExists(Environment.getExternalStorageDirectory() + "/smtechcache/house_info.xml");
         boolean house_data_fg = assistTool.FileExists(Environment.getExternalStorageDirectory() + "/smtechcache/house_data.xml");
         boolean house_mode_fg = assistTool.FileExists(Environment.getExternalStorageDirectory() + "/smtechcache/house_mode.xml");
@@ -65,6 +65,7 @@ public class WelcomActivity extends SmartActivity {
                 }
             }
         }
+        CountJump(1000, AuActivityHouse.class, true);
     }
 
     //处理初始数据
