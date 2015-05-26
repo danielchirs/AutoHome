@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.reggie.au.autohome.command.SmtechData;
 import com.tandong.sa.activity.SmartActivity;
 import com.tandong.sa.tools.AssistTool;
 
@@ -29,14 +30,14 @@ public class AuActivityHouse extends SmartActivity {
         btnl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                assistTool.showToast("用户信息");
+                assistTool.showToast(SmtechData.houseInfo.getHouseName());
             }
         });
 
         btnr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                assistTool.showToast("功能按键");
+                assistTool.showToast(SmtechData.houseInfo.getHouseUser());
             }
         });
 

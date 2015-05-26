@@ -52,6 +52,18 @@ public class WelcomActivity extends SmartActivity {
                     txtnet.setText("配置家居情景文件不存在,请导入数据");
                 } else {
                     try {
+
+                        //清理缓存数据
+                        if(SmtechData.houseList.size()>0){
+                            SmtechData.houseList.clear();
+                        }
+                        if(SmtechData.modMap.size()>0){
+                            SmtechData.modMap.clear();
+                        }
+                        if(SmtechData.dataMap.size()>0){
+                            SmtechData.dataMap.clear();
+                        }
+
                         DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_info.xml", 0);//房子的基本信息
                         DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_data.xml", 1);//房间控制配置
                         DomXml.Personxml(Environment.getExternalStorageDirectory() + "/smtechcache/house_mode.xml", 2);//情景模式控制
@@ -60,12 +72,12 @@ public class WelcomActivity extends SmartActivity {
                     }
                     System.out.println("=======房间数量=======>" + SmtechData.houseList.size());
                     System.out.println("=======情景数据=======>" + SmtechData.modMap.size());
-                    System.out.println("=======1111111=======>" + SmtechData.dataMap.size());
+                    System.out.println("=======控件数据=======>" + SmtechData.dataMap.size());
+                    System.out.println(SmtechData.houseInfo.getHouseName()+"<==房屋信息==>"+SmtechData.houseInfo.getIp());
                     CountJump(5000, AuActivityHouse.class, true);
                 }
             }
         }
-        CountJump(1000, AuActivityHouse.class, true);
     }
 
     //处理初始数据
