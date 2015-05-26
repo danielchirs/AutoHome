@@ -101,17 +101,15 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<SmtechDeviceView> {
                 labelTextView.setText(widgetname);
             final SlideSwitchView switchSwitch = (SlideSwitchView) widgetView
                     .findViewById(R.id.switchswitch);
-            String onCommand = machinecode+function+address+state.get("on");
-            String offCommand = machinecode+function+address+state.get("off");
-            switchSwitch.setTag(1,onCommand);
-            switchSwitch.setTag(2,offCommand);
+            final String onCommand = machinecode+function+address+state.get("on");
+            final String offCommand = machinecode+function+address+state.get("off");
             switchSwitch.setOnChangeListener(new OnSwitchChangedListener() {
                 @Override
                 public void onSwitchChange(SlideSwitchView switchView, boolean isChecked) {
                     if (isChecked) {
-                        Log.i("AutohomeWidgetAdapter",switchSwitch.getTag(1).toString());//开
+                        Log.i("AutohomeWidgetAdapter",onCommand);//开
                     } else {
-                        Log.i("AutohomeWidgetAdapter",switchSwitch.getTag(2).toString());//关
+                        Log.i("AutohomeWidgetAdapter",offCommand);//关
                     }
                 }
             });
