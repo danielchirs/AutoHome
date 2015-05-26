@@ -39,10 +39,7 @@ public class RoomsListActivity extends Activity {
 
         sGridView = (StaggeredGridView) findViewById(R.id.grid_view);
         sGridView.setAdapter(new RoomlistAdapter());
-
-
         Log.d("autohome", "----------------------setOnItemClickListener----------------------"+houseList.size());
-
         sGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
