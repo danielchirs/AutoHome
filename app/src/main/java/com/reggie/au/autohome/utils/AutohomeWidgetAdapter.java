@@ -19,6 +19,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.edmodo.rangebar.RangeBar;
 import com.reggie.au.autohome.R;
 import com.reggie.au.autohome.model.AutohomeItem;
 import com.reggie.au.autohome.utils.SlideSwitchView.OnSwitchChangedListener;
@@ -56,13 +57,10 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<SmtechDeviceView> {
     public View getView(int position, View convertView, ViewGroup parent) {
         RelativeLayout widgetView;
         TextView labelTextView;
-        TextView valueTextView;
         int widgetLayout = 0;
-        String[] splitString = {};
-        SmtechDeviceView deviceView = getItem(position);
+        final SmtechDeviceView deviceView = getItem(position);
         /*根据读取xml来判断加载布局文件*/
         String type = deviceView.getType();
-
         if("switch".equals(type)){
             widgetLayout = R.layout.autohomewidgetlist_switchitem;
         }else if("slider".equals(type)){
@@ -81,133 +79,115 @@ public class AutohomeWidgetAdapter extends ArrayAdapter<SmtechDeviceView> {
         if (convertView == null) {
             widgetView = new RelativeLayout(getContext());
             String inflater = Context.LAYOUT_INFLATER_SERVICE;
-            LayoutInflater vi;
-            vi = (LayoutInflater) getContext().getSystemService(inflater);
+            LayoutInflater vi = (LayoutInflater) getContext().getSystemService(inflater);
             vi.inflate(widgetLayout, widgetView, true);
         } else {
             widgetView = (RelativeLayout) convertView;
         }
-        String machinecode = deviceView.getMachinecode();
-        String function = deviceView.getFunction();
-        String widgetname = deviceView.getWidgetname();
-        String widgetId = deviceView.getWidgetId();
-        Map<String, String> state = deviceView.getItem();//state
-        String icon = deviceView.getIcon();
-        String address = deviceView.getAddress();
+        final String machinecode = deviceView.getMachinecode();
+        final String function = deviceView.getFunction();
+        final String widgetname = deviceView.getWidgetname();
+        final Map<String, String> state = deviceView.getItem();//state
+        final String address = deviceView.getAddress();
         /*根据布局文件来生成各控件属性*/
         if("switch".equals(type)){
             labelTextView = (TextView) widgetView.findViewById(R.id.switchlabel);
             if (labelTextView != null)
                 labelTextView.setText(widgetname);
-            final SlideSwitchView switchSwitch = (SlideSwitchView) widgetView
+            SlideSwitchView switchSwitch = (SlideSwitchView) widgetView
                     .findViewById(R.id.switchswitch);
-            final String onCommand = machinecode+function+address+state.get("on");
-            final String offCommand = machinecode+function+address+state.get("off");
             switchSwitch.setOnChangeListener(new OnSwitchChangedListener() {
                 @Override
                 public void onSwitchChange(SlideSwitchView switchView, boolean isChecked) {
                     if (isChecked) {
+                        String onCommand = machinecode+function+address+state.get("on");
                         Log.i("AutohomeWidgetAdapter",onCommand);//开
                     } else {
+                        String offCommand = machinecode+function+address+state.get("off");
                         Log.i("AutohomeWidgetAdapter",offCommand);//关
                     }
                 }
             });
-            ImageView switchImage = (ImageView) widgetView
-                    .findViewById(R.id.switchimage);
-            //用icon替换
-            switchImage.setImageResource(R.drawable.ic_launcher);
         }else if("slider".equals(type)){
             labelTextView = (TextView) widgetView
                     .findViewById(R.id.sliderlabel);
-            splitString = deviceView.getWidgetname().split("\\[|\\]");
             if (labelTextView != null)
-                labelTextView.setText(splitString[0]);
-            AutohomeSmartImageView itemImage = (AutohomeSmartImageView) widgetView
-                    .findViewById(R.id.sliderimage);
-            itemImage.setImageUrl(".png");
-            SeekBar sliderSeekBar = (SeekBar) widgetView
-                    .findViewById(R.id.sliderseekbar);
+                labelTextView.setText(deviceView.getWidgetname());
+            RangeBar rangebar = (RangeBar) widgetView.findViewById(R.id.light_rangebar);
+            rangebar.setTickCount(deviceView.getItem().size());
+            rangebar.setTickHeight(25);
+            rangebar.setBarWeight(6);
+            rangebar.setBarColor(229999999);
             if (deviceView.getState() != null) {
-                sliderSeekBar.setTag(machinecode+function+address);
-                int sliderState = (int) Float.parseFloat(deviceView.getState());
-                sliderSeekBar.setProgress(sliderState);
-                sliderSeekBar
-                        .setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-                            @Override
-                            public void onProgressChanged(SeekBar seekBar,
-                                                          int progress, boolean fromUser) {
+                rangebar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+                    @Override
+                    public void onIndexChangeListener(RangeBar rangeBar, int leftThumbIndex, int rightThumbIndex) {
+                        //Code using the leftThumbIndex and rightThumbIndex to update the index values.
+                        Log.i("RangeBarChangeLinstener","leftIndex : "+leftThumbIndex);
+                        Log.i("RangeBarChangeLinstener","rightIndex : "+rightThumbIndex);
+                        String lightCommand="";
+                        if(leftThumbIndex==0){
+                            switch (rightThumbIndex){
+                                case 0:
+                                    lightCommand=deviceView.getItem().get("off");
+                                    break;
+                                case 1:
+                                    lightCommand=deviceView.getItem().get("low");
+                                    break;
+                                case 2:
+                                    lightCommand=deviceView.getItem().get("middle");
+                                    break;
+                                case 3:
+                                    lightCommand=deviceView.getItem().get("height");
+                                    break;
+                                case 4:
+                                    lightCommand=deviceView.getItem().get("big");
+                                    break;
+                                default:
+                                    lightCommand=deviceView.getItem().get("off");
+                                    break;
                             }
-
-                            @Override
-                            public void onStartTrackingTouch(SeekBar seekBar) {
-                                Log.i("AutohomeAdapter",
-                                        "onStartTrackingTouch position = "
-                                                + seekBar.getProgress());
-                            }
-
-                            @Override
-                            public void onStopTrackingTouch(SeekBar seekBar) {
-                                Log.i("AutohomeAdapter",
-                                        "onStopTrackingTouch position = "
-                                                + seekBar.getProgress());
-                                AutohomeItem sliderItem = (AutohomeItem) seekBar
-                                        .getTag();
-                                // sliderItem.sendCommand(String.valueOf(seekBar.getProgress()));
-//                                    sendItemCommand(sliderItem,
-//                                            String.valueOf(seekBar.getProgress()));
-                            }
-                        });
+                            String command = machinecode+function+address+lightCommand;
+                            Log.i("rangeBar","滑动开光: "+command);
+                        }
+                    }
+                });
             }
         }else if("conditioning".equals(type)){
+            Log.i("conditioning","-------------------widgetname :"+deviceView.getWidgetname()+" | machinecode: "+deviceView.getMachinecode()+" | function: "+deviceView.getFunction()+" | address:  "+deviceView.getAddress());
             labelTextView = (TextView) widgetView
-                    .findViewById(R.id.setpointlabel);
-            splitString = deviceView.getWidgetname().split("\\[|\\]");
+            .findViewById(R.id.setpointlabel);
             if (labelTextView != null)
-                labelTextView.setText(splitString[0]);
-            AutohomeSmartImageView setPointImage = (AutohomeSmartImageView) widgetView
-                    .findViewById(R.id.setpointimage);
-            setPointImage.setImageUrl(".png");
+                labelTextView.setText(deviceView.getWidgetname());
             TextView setPointValueTextView = (TextView) widgetView
                     .findViewById(R.id.setpointvaluelabel);
-            if (setPointValueTextView != null)
-                if (splitString.length > 1) {
-                    // If value is not empty, show TextView
-                    setPointValueTextView.setVisibility(View.VISIBLE);
-                    setPointValueTextView.setText(splitString[1]);
-                }
-            Button setPointMinusButton = (Button) widgetView
-                    .findViewById(R.id.setpointbutton_minus);
-            Button setPointPlusButton = (Button) widgetView
-                    .findViewById(R.id.setpointbutton_plus);
-            setPointMinusButton.setTag(deviceView.getCode(""));
-            setPointPlusButton.setTag(deviceView.getCode(""));
+            setPointValueTextView.setText(deviceView.getState()!=null?deviceView.getState():"22");
+            Button setPointMinusButton = (Button) widgetView.findViewById(R.id.setpointbutton_minus);
+            Button setPointPlusButton = (Button) widgetView.findViewById(R.id.setpointbutton_plus);
             setPointMinusButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i("AutohomeAdapter", "Minus");
-                    String setPointWidget = (String) v.getTag();
-                    float currentValue = Float.valueOf(
-                            setPointWidget).floatValue();
-                    currentValue = currentValue - 0.5f;
-                    if (currentValue < 16f) {
-                        currentValue = 16f;
-                    }
-                    //sendItemCommand(setPointWidget.getItem(),String.valueOf(currentValue));
+//                    Log.i("AutohomeAdapter", "Minus");
+//                    String setPointWidget = deviceView.getState()!=null?deviceView.getState():"22";
+//                    Float currentValue = 22F;
+//                    currentValue = currentValue - 1f;
+//                    if (currentValue < Float.valueOf(deviceView.getMinvalue())) {
+//                        currentValue = Float.valueOf(deviceView.getMinvalue());
+//                    }
+                    //setPointValueTextView.setText(currentValue.toString());
                 }
             });
             setPointPlusButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i("AutohomeAdapter", "Plus");
-                    String setPointWidget = (String) v.getTag();
-                    float currentValue = Float.valueOf(
-                            setPointWidget).floatValue();
-                    currentValue = currentValue + 0.5f;
-                    if (currentValue > 28f) {
-                        currentValue = 28f;
-                    }
-                    //sendItemCommand(setPointWidget.getItem(), String.valueOf(currentValue));
+//                    Log.i("AutohomeAdapter", "Plus");
+//                    String setPointWidget = deviceView.getState()!=null?deviceView.getState():"22";
+//                    Float currentValue = 22F;
+//                    currentValue = currentValue + 1f;
+//                    if (currentValue > Float.valueOf(deviceView.getMaxvalue())) {
+//                        currentValue = Float.valueOf(deviceView.getMaxvalue());
+//                    }
+                    //setPointValueTextView.setText(currentValue.toString());
                 }
             });
         }else if("rollershutter".equals(type)){

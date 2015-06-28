@@ -9,18 +9,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true">
-
-        <com.reggie.au.autohome.utils.AutohomeSmartImageView
-            android:id="@+id/sliderimage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxHeight="50dip"
-            android:maxWidth="50dip"
-            android:minHeight="50dip"
-            android:minWidth="50dip"
-            android:paddingBottom="6dip"
-            android:paddingTop="6dip" />
-
         <TextView
             android:id="@+id/sliderlabel"
             android:layout_width="wrap_content"
@@ -29,13 +17,15 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 
-    <SeekBar
-        android:id="@+id/sliderseekbar"
-        android:layout_width="130dip"
+    <com.edmodo.rangebar.RangeBar
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/light_rangebar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:max="100"></SeekBar>
+        custom:tickCount="5"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"/>
 
     <LinearLayout
         android:id="@+id/listdivider"
