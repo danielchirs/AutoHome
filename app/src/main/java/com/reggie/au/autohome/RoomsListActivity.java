@@ -26,9 +26,7 @@ public class RoomsListActivity extends Activity {
 
     private static final List<SmtechHouseView> houseList = SmtechData.houseList;
 
-    private static final int[] COLOR = new int[]{
-            0xff33b5e5, 0xffaa66cc, 0xff99cc00, 0xffffbb33, 0xffff4444
-    };
+    private static final int[] COLOR = new int[]{0xff33b5e5, 0xffaa66cc, 0xff99cc00, 0xffffbb33, 0xffff4444};
 
     private StaggeredGridView sGridView;
 

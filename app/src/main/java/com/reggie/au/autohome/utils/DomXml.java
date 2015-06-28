@@ -228,7 +228,7 @@ public class DomXml {
                 case XmlPullParser.END_TAG://结束元素事件
                     if (xmlParser.getName().equalsIgnoreCase("mode"))
                     {
-                        SmtechData.modMap.put(smtechSceneModeView.getId()+"",smtechSceneModeView);
+                        SmtechData.modList.add(smtechSceneModeView);
                         smtechSceneModeView=null;
                     }
                     break;

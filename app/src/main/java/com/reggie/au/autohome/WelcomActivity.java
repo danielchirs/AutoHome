@@ -57,8 +57,8 @@ public class WelcomActivity extends SmartActivity {
                         if(SmtechData.houseList.size()>0){
                             SmtechData.houseList.clear();
                         }
-                        if(SmtechData.modMap.size()>0){
-                            SmtechData.modMap.clear();
+                        if(SmtechData.modList.size()>0){
+                            SmtechData.modList.clear();
                         }
                         if(SmtechData.dataMap.size()>0){
                             SmtechData.dataMap.clear();
@@ -71,7 +71,7 @@ public class WelcomActivity extends SmartActivity {
                         e.printStackTrace();
                     }
                     System.out.println("=======房间数量=======>" + SmtechData.houseList.size());
-                    System.out.println("=======情景数据=======>" + SmtechData.modMap.size());
+                    System.out.println("=======情景数据=======>" + SmtechData.modList.size());
                     System.out.println("=======控件数据=======>" + SmtechData.dataMap.size());
                     System.out.println(SmtechData.houseInfo.getHouseName()+"<==房屋信息==>"+SmtechData.houseInfo.getIp());
                     CountJump(5000, AuActivityHouse.class, true);
