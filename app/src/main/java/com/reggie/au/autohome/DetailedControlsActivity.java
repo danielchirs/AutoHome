@@ -10,11 +10,13 @@ import android.widget.TextView;
 import com.reggie.au.autohome.command.SmtechData;
 import com.reggie.au.autohome.utils.AutohomeWidgetAdapter;
 import com.reggie.au.autohome.view.SmtechDeviceView;
+import com.tandong.sa.activity.SmartActivity;
+import com.tandong.sa.tools.AssistTool;
 
 import java.util.List;
 
 
-public class DetailedControlsActivity extends Activity {
+public class DetailedControlsActivity extends SmartActivity {
 
     // Logging TAG
     private static final String TAG = "WidgetListActivity";
@@ -24,6 +26,7 @@ public class DetailedControlsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AssistTool.setFullScreen(this);
         setContentView(R.layout.activity_detailed_controls);
         setView();
     }

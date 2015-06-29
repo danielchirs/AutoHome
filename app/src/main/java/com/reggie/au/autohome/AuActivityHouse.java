@@ -61,7 +61,7 @@ public class AuActivityHouse extends SmartActivity {
         btnl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                assistTool.showToast(SmtechData.houseInfo.getHouseName());
+                CountJump(10, UserInfoActivity.class, false);
             }
         });
 
@@ -88,17 +88,17 @@ public class AuActivityHouse extends SmartActivity {
     public class modAdapter extends BaseAdapter{
         @Override
         public int getCount() {
-            return 0;
+            return modList.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return null;
+            return modList.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return modList.get(position).getId();
         }
 
         @Override
@@ -114,6 +114,7 @@ public class AuActivityHouse extends SmartActivity {
             view.setGravity(Gravity.CENTER);
             view.setTextColor(Color.WHITE);
             AbsListView.LayoutParams lp = (AbsListView.LayoutParams) view.getLayoutParams();
+            lp.width = 300;
             lp.height = (int) (getPositionRatio(position) * 200);
             view.setLayoutParams(lp);
             return view;

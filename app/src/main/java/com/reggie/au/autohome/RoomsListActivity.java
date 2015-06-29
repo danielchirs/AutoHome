@@ -17,12 +17,14 @@ import android.widget.TextView;
 import com.etsy.android.grid.StaggeredGridView;
 import com.reggie.au.autohome.command.SmtechData;
 import com.reggie.au.autohome.view.SmtechHouseView;
+import com.tandong.sa.activity.SmartActivity;
+import com.tandong.sa.tools.AssistTool;
 
 import java.util.List;
 import java.util.Random;
 
 
-public class RoomsListActivity extends Activity {
+public class RoomsListActivity extends SmartActivity {
 
     private static final List<SmtechHouseView> houseList = SmtechData.houseList;
 
@@ -33,8 +35,8 @@ public class RoomsListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AssistTool.setFullScreen(this);
         setContentView(R.layout.activity_rooms_list);
-
         sGridView = (StaggeredGridView) findViewById(R.id.grid_view);
         sGridView.setAdapter(new RoomlistAdapter());
         Log.d("autohome", "----------------------setOnItemClickListener----------------------"+houseList.size());
