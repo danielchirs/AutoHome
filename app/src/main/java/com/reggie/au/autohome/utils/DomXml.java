@@ -137,7 +137,7 @@ public class DomXml {
                         }
                         if("widgetid".equals(name)){
                             smtechDeviceView.setWidgetId(xmlParser.nextText());
-                }
+                        }
                         if("widgetname".equals(name)){
                             smtechDeviceView.setWidgetname(xmlParser.nextText());
                         }
@@ -156,6 +156,15 @@ public class DomXml {
 
                         if("address".equals(name)){
                             smtechDeviceView.setAddress(xmlParser.nextText());
+                        }
+                        if("minvalue".equals(name)){
+                            smtechDeviceView.setMinvalue(xmlParser.nextText());
+                        }
+                        if("maxvalue".equals(name)){
+                            smtechDeviceView.setMaxvalue(xmlParser.nextText());
+                        }
+                        if("state".equals(name)){
+                            smtechDeviceView.setState(xmlParser.nextText());
                         }
                         if("item".equals(name)){
                             smtechDeviceView.getItem().put(xmlParser.getAttributeValue(0),xmlParser.nextText());
