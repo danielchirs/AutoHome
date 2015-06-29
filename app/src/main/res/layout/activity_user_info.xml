@@ -1,0 +1,135 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.reggie.au.autohome.UserInfoActivity"
+    android:background="#ff771680">
+
+
+    <include android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/heard"
+        android:id="@+id/include" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/include"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        >
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="房子:"
+                android:id="@+id/lab_hname"
+                android:autoText="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="123"
+                android:id="@+id/txt_hname"
+                android:autoText="false" />
+            </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="用户名:"
+                android:id="@+id/lab_name"
+                android:autoText="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="123"
+                android:id="@+id/txt_name"
+                android:autoText="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="地址:"
+                android:id="@+id/lab_address"
+                android:autoText="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="123"
+                android:id="@+id/txt_address"
+                android:autoText="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="联系方式:"
+                android:id="@+id/lab_tel"
+                android:autoText="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="123"
+                android:id="@+id/txt_tel"
+                android:autoText="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="手机:"
+                android:id="@+id/lab_mobile"
+                android:autoText="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="123"
+                android:id="@+id/txt_mobile"
+                android:autoText="false" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>
